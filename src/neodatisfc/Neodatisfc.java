@@ -8,8 +8,11 @@ package neodatisfc;
 import java.util.Date;
 import org.neodatis.odb.ODB;
 import org.neodatis.odb.ODBFactory;
+import org.neodatis.odb.OID;
 
 import org.neodatis.odb.Objects;
+import org.neodatis.odb.core.query.IQuery;
+import org.neodatis.odb.core.query.criteria.Where;
 
 /**
  *
@@ -29,8 +32,10 @@ public class Neodatisfc {
         odb = ODBFactory.open(ODB_NAME);//conectamos a la base
         
 //        añadir_jugadores_equipos(odb);
-        amosar_deportes(odb);
-        amosar_jugadores(odb);
+//        amosar_deportes(odb);
+//        amosar_jugadores(odb);
+//        actualiza_por_nome_xogador(odb, "olivier", "oliver");
+//        xogadoresDeporte(odb, "volley-ball");
         
         odb.close();//desconectamos la base
     }
@@ -99,23 +104,50 @@ public class Neodatisfc {
 
     }
     
+    //amosar os nomes de todos os deportes
     public static void amosar_deportes(ODB odb){
         
         Objects<Sport> sports = odb.getObjects(Sport.class);
         Sport sport = null;
         while(sports.hasNext()){
-        sport = sports.next();
-        System.out.println(sport.getName());
+            sport = sports.next();
+            System.out.println(sport.getName());
         }
     }
     
+    //amosar nome do xogador, deporte e salario
     public static void amosar_jugadores(ODB odb){
         
         Objects<Player> players = odb.getObjects(Player.class);
         Player player = null;
         while(players.hasNext()){
-        player = players.next();
-        System.out.println(player.getName());
+            player = players.next();
+            System.out.println(player.getName()+" - "+player.getFavoriteSport()+" - "+player.getSalario());
+        }
+    }
+    
+    //actualiza o nome dun xogador
+    public static void actualiza_por_nome_xogador(ODB odb, String nombreAnterior, String nombreNuevo){
+        
+        IQuery query = odb.criteriaQuery(Player.class,Where.equal("name", nombreAnterior));
+        Objects<Player> player = odb.getObjects(query);
+        Player p=null;
+        while(player.hasNext()){
+            p=player.next();
+            p.setName(nombreNuevo);
+            OID store = odb.store(p);
+        }
+    }
+    
+    //amosar os xogadores por deporte
+    public static void xogadoresDeporte(ODB odb, String deporte){
+        
+        IQuery query = odb.criteriaQuery(Player.class,Where.equal("favoriteSport", deporte));
+        Objects<Player> players = odb.getObjects(query);
+        Player player = null;
+        while(players.hasNext()){
+            player = players.next();
+            System.out.println(player.getName());
         }
     }
     
