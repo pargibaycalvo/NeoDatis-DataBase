@@ -32,14 +32,14 @@ public class Neodatisfc {
 
 //        añadir_jugadores_equipos(odb);
 //        amosar_deportes(odb);
-        amosar_jugadores(odb);
+//        amosar_jugadores(odb);
 //        actualiza_por_nome_xogador(odb, "olivier", "oliver");
 //        xogadoresDeporte(odb, "volley-ball");
 //        devoltar_equipos_con_xogadores_menos_dunha_cantidade(odb, 2000); X
 //        iguala_nomes_por_deporte(odb, "tennis", "pedro");
 //        nativeQueryXogadoresDeporte(odb, "volley-ball", "volley"); X
 //        borrar_xogadores_por_nome(odb, "minh");
-        listar_xogadores_por_nome_e_deporte(odb, "pedro", "tennis");
+//        listar_xogadores_por_nome_e_deporte(odb, "pedro", "tennis");
         
         odb.close();//desconectamos la base
     }
